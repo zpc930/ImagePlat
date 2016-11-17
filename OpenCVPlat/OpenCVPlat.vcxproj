@@ -57,13 +57,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>I:\Opencv\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\OpenCv\opencv\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opencv_calib3d2413d.lib;opencv_contrib2413d.lib;opencv_core2413d.lib;opencv_features2d2413d.lib;opencv_flann2413d.lib;opencv_gpu2413d.lib;opencv_highgui2413d.lib;opencv_imgproc2413d.lib;opencv_legacy2413d.lib;opencv_ml2413d.lib;opencv_nonfree2413d.lib;opencv_objdetect2413d.lib;opencv_ocl2413d.lib;opencv_photo2413d.lib;opencv_stitching2413d.lib;opencv_superres2413d.lib;opencv_ts2413d.lib;opencv_video2413d.lib;opencv_videostab2413d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>I:\Opencv\opencv\sources\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\OpenCv\opencv\build\x86\vc12\lib</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -107,54 +107,72 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoxBlur.h" />
+    <ClInclude Include="bilateralFilter.h" />
+    <ClInclude Include="Canny.h" />
+    <ClInclude Include="clahe.h" />
     <ClInclude Include="ColorBalance.h" />
     <ClInclude Include="CommonHeader.h" />
+    <ClInclude Include="ColorConvert.h" />
+    <ClInclude Include="DCT.h" />
     <ClInclude Include="DialogVignette.h" />
     <ClInclude Include="FindEdges.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="HistgramBinaryzation.h" />
     <ClInclude Include="Histogram.h" />
+    <ClInclude Include="ImageUtility.h" />
     <ClInclude Include="Inpainting.h" />
     <ClInclude Include="Liquify.h" />
     <ClInclude Include="Lomo.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MedianFilter.h" />
+    <ClInclude Include="MoravecFP.h" />
     <ClInclude Include="OpenCVPlat.h" />
     <ClInclude Include="OpenCVPlatDoc.h" />
     <ClInclude Include="OpenCVPlatView.h" />
     <ClInclude Include="Otsu.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="retinex.h" />
     <ClInclude Include="Saturation.h" />
     <ClInclude Include="SelectiveBlur.h" />
     <ClInclude Include="Sharpen.h" />
     <ClInclude Include="Skin.h" />
+    <ClInclude Include="SSR.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TVDenoising.h" />
     <ClInclude Include="Vignette.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bilateralFilter.cpp" />
+    <ClCompile Include="Canny.cpp" />
+    <ClCompile Include="clahe.cpp" />
     <ClCompile Include="BoxBlur.cpp" />
     <ClCompile Include="ColorBalance.cpp" />
+    <ClCompile Include="ColorConvert.cpp" />
+    <ClCompile Include="DCT.cpp" />
     <ClCompile Include="DialogVignette.cpp" />
     <ClCompile Include="FindEdges.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="HistgramBinaryzation.cpp" />
     <ClCompile Include="Histogram.cpp" />
+    <ClCompile Include="GrayWorld.cpp" />
+    <ClCompile Include="ImageUtility.cpp" />
     <ClCompile Include="Inpainting.cpp" />
     <ClCompile Include="Liquify.cpp" />
     <ClCompile Include="Lomo.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MedianFilter.cpp" />
+    <ClCompile Include="MoravecFP.cpp" />
     <ClCompile Include="OpenCVPlat.cpp" />
     <ClCompile Include="OpenCVPlatDoc.cpp" />
     <ClCompile Include="OpenCVPlatView.cpp" />
     <ClCompile Include="Otsu.cpp" />
+    <ClCompile Include="retinex.cpp" />
     <ClCompile Include="Saturation.cpp" />
     <ClCompile Include="SelectiveBlur.cpp" />
     <ClCompile Include="Sharpen.cpp" />
     <ClCompile Include="Skin.cpp" />
+    <ClCompile Include="SSR.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

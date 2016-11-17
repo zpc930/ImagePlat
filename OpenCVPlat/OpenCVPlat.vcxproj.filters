@@ -78,9 +78,6 @@
     <ClInclude Include="FindEdges.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BoxBlur.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Otsu.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -94,6 +91,33 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="TVDenoising.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="bilateralFilter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Canny.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="clahe.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorConvert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DCT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageUtility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MoravecFP.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="retinex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SSR.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -165,6 +189,36 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="TVDenoising.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="bilateralFilter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Canny.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="clahe.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorConvert.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DCT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GrayWorld.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageUtility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MoravecFP.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SSR.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="retinex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
