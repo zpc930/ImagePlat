@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "BoxBlur.h"
-
+#include "Core.h"
 
 BoxBlur::BoxBlur()
 {
@@ -10,27 +10,7 @@ BoxBlur::BoxBlur()
 BoxBlur::~BoxBlur()
 {
 }
-/// <summary>
-/// 分配内存函数,以32字节对齐。
-/// </summary>
-/// <param name="Size">需要使用的内存大小（以字节为单位）。</param>
-/// <param name="ZeroMemory">内存数据是否进行清零处理 。</param>
-/// <returns>返回所分配内存的指针，失败则返回NULL。</returns>
-void *AllocMemory(unsigned int Size, bool ZeroMemory)	//	https://technet.microsoft.com/zh-cn/library/8z34s9c6
-{
-	void *Ptr = _aligned_malloc(Size, 32);					//	考虑SSE,AVX等高级函数的需求，分配起始地址使用32字节对齐。其实_mm_malloc就是这个函数
-	if (Ptr != NULL && ZeroMemory == true)
-		memset(Ptr, 0, Size);
-	return Ptr;
-}
-/// <summary>
-/// 释放内存。
-/// </summary>
-/// <param name="Ptr">内存数据的地址。</param>
-void FreeMemory(void *Ptr)
-{
-	if (Ptr != NULL) _aligned_free(Ptr);		//	_mm_free就是该函数
-}
+
 int *GetExpandPos(int Length, int Left, int Right, EdgeMode Edge)
 {
 	if (Left < 0 || Length < 0 || Right < 0) return NULL;
