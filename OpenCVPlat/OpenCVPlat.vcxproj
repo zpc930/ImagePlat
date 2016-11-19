@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bilateralFilter.h" />
+    <ClInclude Include="BoxFilter2.h" />
     <ClInclude Include="Canny.h" />
     <ClInclude Include="clahe.h" />
     <ClInclude Include="ColorBalance.h" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bilateralFilter.cpp" />
+    <ClCompile Include="BoxFilter2.cpp" />
     <ClCompile Include="Canny.cpp" />
     <ClCompile Include="clahe.cpp" />
     <ClCompile Include="BoxBlur.cpp" />
