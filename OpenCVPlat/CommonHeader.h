@@ -4,7 +4,15 @@ enum EdgeMode
 	Tile = 0,				//	重复边缘像素
 	Smear = 1				//	镜像数据
 };
-
+enum DEPTH
+{
+	DEPTH_8U, 				//	unsigned char
+	DEPTH_8S, 				//	char
+	DEPTH_16S,				//	short
+	DEPTH_32S,				//  int
+	DEPTH_32F,				//	float
+	DEPTH_64F				//	double
+};
 struct TMatrix
 {
 	int Width;					//	矩阵的宽度
@@ -15,3 +23,4 @@ struct TMatrix
 	unsigned char *Data;		//	矩阵的数据
 	int Reserved;				//	保留使用
 };
+
