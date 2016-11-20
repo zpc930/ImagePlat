@@ -8,6 +8,7 @@ enum DEPTH
 {
 	DEPTH_8U, 				//	unsigned char
 	DEPTH_8S, 				//	char
+	DEPTH_16U, 				//	char
 	DEPTH_16S,				//	short
 	DEPTH_32S,				//  int
 	DEPTH_32F,				//	float

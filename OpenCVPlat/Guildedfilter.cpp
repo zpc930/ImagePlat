@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Guildedfilter.h"
 #include "Core.h"
-
+#include "MatToTMatrix.h"
 Guildedfilter::Guildedfilter()
 {
 }
@@ -48,6 +48,7 @@ TMatrix*  Guildedfilter::CumSum(const TMatrix* src, const int d)
 	}
 	return dest;
 }
+
 
 //  %   BOXFILTER   O(1) time box filtering using cumulative sum
 //	%
@@ -105,9 +106,29 @@ TMatrix*  Guildedfilter::BoxFilter(const TMatrix* imSrc, const int r)
 	}
 	return imDst;
 }
-
+int Guildedfilter::GuidedFilterMat(const  cv::Mat I, cv::Mat p, const int r, const float eps)
+{
+	int H = I.cols;
+	int W = I.rows;
+	int nDepth = MatDepthtoTMatrixDpth(I.depth());
+	TMatrix* pTI = CreateMatrix(W, H,nDepth, I.channels(), false);
+	ConvertMat2Matrix(I, pTI);
+	TMatrix* pTP = CreateMatrix(W, H, nDepth, I.channels(), false);
+	ConvertMat2Matrix(I, pTP);
+}
 TMatrix* Guildedfilter::GuidedFilterProcess(const  TMatrix* I, const TMatrix* p, const int r, const float eps)
 {
-
+	int H = I->Height;
+	int W = I->Width;
+	TMatrix* N = CreateMatrix(W, H, I->Depth, I->Channel, false);
+	MatrixFill(N, 1.0);
+	TMatrix* M = BoxFilter(N, r);
+	FreeMatrix(N);
+	N = M;
+	if (1 == I->Channel)
+	{
+		TMatrix* mean_I = BoxFilter(I, r);
+		TMatrix* mean_p = BoxFilter(p, r);
+	}
 	return NULL;
 }

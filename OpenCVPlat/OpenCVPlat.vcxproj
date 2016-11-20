@@ -107,6 +107,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arithm.h" />
     <ClInclude Include="bilateralFilter.h" />
     <ClInclude Include="BoxFilter2.h" />
     <ClInclude Include="Canny.h" />
@@ -114,10 +115,12 @@
     <ClInclude Include="ColorBalance.h" />
     <ClInclude Include="CommonHeader.h" />
     <ClInclude Include="ColorConvert.h" />
+    <ClInclude Include="Core.h" />
     <ClInclude Include="DCT.h" />
     <ClInclude Include="DialogVignette.h" />
     <ClInclude Include="FindEdges.h" />
     <ClInclude Include="GaussianBlur.h" />
+    <ClInclude Include="Guildedfilter.h" />
     <ClInclude Include="HistgramBinaryzation.h" />
     <ClInclude Include="Histogram.h" />
     <ClInclude Include="ImageUtility.h" />
@@ -125,6 +128,7 @@
     <ClInclude Include="Liquify.h" />
     <ClInclude Include="Lomo.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MatToTMatrix.h" />
     <ClInclude Include="MedianFilter.h" />
     <ClInclude Include="MoravecFP.h" />
     <ClInclude Include="OpenCVPlat.h" />
@@ -144,6 +148,7 @@
     <ClInclude Include="Vignette.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="arithm.cpp" />
     <ClCompile Include="bilateralFilter.cpp" />
     <ClCompile Include="BoxFilter2.cpp" />
     <ClCompile Include="Canny.cpp" />
@@ -151,10 +156,12 @@
     <ClCompile Include="BoxBlur.cpp" />
     <ClCompile Include="ColorBalance.cpp" />
     <ClCompile Include="ColorConvert.cpp" />
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="DCT.cpp" />
     <ClCompile Include="DialogVignette.cpp" />
     <ClCompile Include="FindEdges.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
+    <ClCompile Include="Guildedfilter.cpp" />
     <ClCompile Include="HistgramBinaryzation.cpp" />
     <ClCompile Include="Histogram.cpp" />
     <ClCompile Include="GrayWorld.cpp" />
@@ -163,6 +170,7 @@
     <ClCompile Include="Liquify.cpp" />
     <ClCompile Include="Lomo.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MatToTMatrix.cpp" />
     <ClCompile Include="MedianFilter.cpp" />
     <ClCompile Include="MoravecFP.cpp" />
     <ClCompile Include="OpenCVPlat.cpp" />

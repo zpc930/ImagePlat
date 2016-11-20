@@ -18,6 +18,9 @@ int GetElementSize(int Depth)
 	case DEPTH_8S:
 		Size = sizeof(char);
 		break;
+	case DEPTH_16U:
+		Size = sizeof(unsigned short);
+		break;
 	case DEPTH_16S:
 		Size = sizeof(short);
 		break;

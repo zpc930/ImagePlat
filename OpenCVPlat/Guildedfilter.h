@@ -1,5 +1,6 @@
 #pragma once
 #include "CommonHeader.h"
+#include <opencv/cv.h>
 class Guildedfilter
 {
 public:
@@ -14,6 +15,6 @@ public:
 		//	%   - local window radius: r
 		//	%   - regularization parameter: eps
 	TMatrix* GuidedFilterProcess(const  TMatrix* I, const TMatrix* p, const int r, const float eps);
-
+	int GuidedFilterMat(const  cv::Mat I, cv::Mat p, const int r, const float eps);
 };
 
