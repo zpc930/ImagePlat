@@ -1,6 +1,6 @@
 #include "stdAfx.h"
 #include "Core.h"
-
+#include "arithm.h"
 
 /// <summary>
 /// 根据矩阵元素的类型来获取一个元素实际占用的字节数
@@ -125,5 +125,18 @@ TMatrix *Clone (TMatrix *Src)
 		return Dest;
 	}
 	return NULL;	
+}
+
+TMatrix *DividMatrix(TMatrix *Src, TMatrix *Src2)
+{
+	
+	int W = Src->Width;
+	int H = Src->Height;
+	int nStep = Src->WidthStep;
+	int nStep2 = Src2->WidthStep;
+	TMatrix * dst = CreateMatrix(W, H, Src->Depth, Src->Channel, false);
+	div_Operate(Src->Data, nStep, Src2->Data, nStep2,
+		dst->Data, dst->WidthStep, W, H, 1.0);
+	return dst;
 }
 
