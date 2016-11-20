@@ -130,7 +130,7 @@ TMatrix *Clone (TMatrix *Src)
 	return NULL;	
 }
 
-TMatrix *DividMatrix(TMatrix *Src, TMatrix *Src2)
+TMatrix *DividMatrix64F(TMatrix *Src, TMatrix *Src2)
 {
 	
 	int W = Src->Width;
@@ -138,8 +138,20 @@ TMatrix *DividMatrix(TMatrix *Src, TMatrix *Src2)
 	int nStep = Src->WidthStep;
 	int nStep2 = Src2->WidthStep;
 	TMatrix * dst = CreateMatrix(W, H, Src->Depth, Src->Channel, false);
-	div_Operate(Src->Data, nStep, Src2->Data, nStep2,
-		dst->Data, dst->WidthStep, W, H, 1.0);
+	div_Operate((double*)Src->Data, nStep, (double*)Src2->Data, nStep2,
+		(double*)dst->Data, dst->WidthStep, W, H, 1.0);
 	return dst;
 }
 
+TMatrix *MultiplyMatrix64F(TMatrix *Src, TMatrix *Src2)
+{
+
+	int W = Src->Width;
+	int H = Src->Height;
+	int nStep = Src->WidthStep;
+	int nStep2 = Src2->WidthStep;
+	TMatrix * dst = CreateMatrix(W, H, Src->Depth, Src->Channel, false);
+	mul_operate((double*)Src->Data, nStep, (double*)Src2->Data, nStep2,
+		(double*)dst->Data, dst->WidthStep, W, H, 1.0);
+	return dst;
+}

@@ -70,7 +70,7 @@ T* dst, size_t step, int width,int height , WT scale)
 		{
 			int i = 0;
 
-			for (; i <= size.width - 4; i += 4)
+			for (; i <= width - 4; i += 4)
 			{
 				T t0;
 				T t1;
@@ -85,7 +85,7 @@ T* dst, size_t step, int width,int height , WT scale)
 				dst[i + 3] = t1;
 			}
 
-			for (; i < size.width; i++)
+			for (; i < width; i++)
 				dst[i] = saturate_cast<T>(src1[i] * src2[i]);
 		}
 	}

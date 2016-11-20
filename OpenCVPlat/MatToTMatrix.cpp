@@ -48,7 +48,7 @@ int CopyMat2Matrix(cv::Mat src, TMatrix* pDst)
 }
 int ConvertMat2Matrix(cv::Mat src, TMatrix* pDst)
 {
-	int matType =src.type();
+	int matType =src.depth();
 	int nTmatrixType = pDst->Depth;
 	if (matType == CV_8U && nTmatrixType == DEPTH_8U)
 	{

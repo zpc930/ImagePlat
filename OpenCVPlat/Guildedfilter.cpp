@@ -115,6 +115,8 @@ int Guildedfilter::GuidedFilterMat(const  cv::Mat I, cv::Mat p, const int r, con
 	ConvertMat2Matrix(I, pTI);
 	TMatrix* pTP = CreateMatrix(W, H, nDepth, I.channels(), false);
 	ConvertMat2Matrix(I, pTP);
+	GuidedFilterProcess(pTI, pTP, r, eps);
+	return 0;
 }
 TMatrix* Guildedfilter::GuidedFilterProcess(const  TMatrix* I, const TMatrix* p, const int r, const float eps)
 {
@@ -128,7 +130,16 @@ TMatrix* Guildedfilter::GuidedFilterProcess(const  TMatrix* I, const TMatrix* p,
 	if (1 == I->Channel)
 	{
 		TMatrix* mean_I = BoxFilter(I, r);
+		TMatrix* pMeanId = DividMatrix64F(mean_I, N);
+		FreeMatrix(mean_I);
+		mean_I = pMeanId;
 		TMatrix* mean_p = BoxFilter(p, r);
+		TMatrix* pMeanPd = DividMatrix64F(mean_p, N);		
+		mean_p = pMeanPd;
+		FreeMatrix(mean_p);
+		TMatrix* tmp = MultiplyMatrix64F((TMatrix *)I, (TMatrix *)p);
+		TMatrix* mean_Ip = BoxFilter(tmp, r);
+
 	}
 	return NULL;
 }

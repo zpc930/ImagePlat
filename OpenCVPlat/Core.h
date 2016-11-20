@@ -111,8 +111,5 @@ template<typename T> void MatrixFill(TMatrix *Src, T value)
 		break;
 	}
 };
-//TMatrix *DividMatrix(TMatrix *Src, TMatrix *Src2)
-//{
-////	T z0 = src2[i] != 0 ? saturate_cast<T>(src1[i] * scale / src2[i]) : 0;
-//	return NULL;
-//}
+TMatrix *DividMatrix64F(TMatrix *Src, TMatrix *Src2);
+TMatrix *MultiplyMatrix64F(TMatrix *Src, TMatrix *Src2);
