@@ -46,6 +46,22 @@ int CopyMat2Matrix(cv::Mat src, TMatrix* pDst)
 	}
 	return 0;
 }
+int CopyMatrix2Mat(TMatrix* psrc, cv::Mat Dst)
+{
+	int nChannel = Dst.channels();
+	int width = Dst.rows;
+	int height = Dst.cols;
+	int ndestwstep = psrc->WidthStep;
+	
+	for (int y = 0; y < height; y++)
+	{
+		uchar *data = psrc->Data + ndestwstep*y; 
+		uchar *pdessdata = Dst.ptr<uchar>(y);
+		int nlen = GetElementSize(psrc->Depth)*width*nChannel;
+		memcpy(pdessdata, data, nlen);
+	}
+	return 0;
+}
 int ConvertMat2Matrix(cv::Mat src, TMatrix* pDst)
 {
 	int matType =src.depth();
@@ -77,6 +93,41 @@ int ConvertMat2Matrix(cv::Mat src, TMatrix* pDst)
 	else if (matType == CV_64F && nTmatrixType == DEPTH_64F)
 	{
 		CopyMat2Matrix(src, pDst);
+	}
+	return 0;
+}
+
+int  ConvertMatrix2Mat(TMatrix* pScr, cv::Mat dst)
+{
+	int matType = dst.depth();
+	int nTmatrixType = pScr->Depth;
+	if (matType == CV_8U && nTmatrixType == DEPTH_8U)
+	{
+		CopyMatrix2Mat(pScr, dst);
+	}
+	else if (matType == CV_8S && nTmatrixType == DEPTH_8S)
+	{
+		CopyMatrix2Mat(pScr, dst);
+	}
+	else if (matType == CV_16U && nTmatrixType == DEPTH_16U)
+	{
+		CopyMatrix2Mat(pScr, dst);
+	}
+	else if (matType == CV_16S && nTmatrixType == DEPTH_16S)
+	{
+		CopyMatrix2Mat(pScr, dst);
+	}
+	else if (matType == CV_32S && nTmatrixType == DEPTH_32S)
+	{
+		CopyMatrix2Mat(pScr, dst);
+	}
+	else if (matType == CV_32F && nTmatrixType == DEPTH_32F)
+	{
+		CopyMatrix2Mat(pScr, dst);
+	}
+	else if (matType == CV_64F && nTmatrixType == DEPTH_64F)
+	{
+		CopyMatrix2Mat(pScr, dst);
 	}
 	return 0;
 }

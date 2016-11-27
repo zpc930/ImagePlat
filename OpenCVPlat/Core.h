@@ -113,3 +113,5 @@ template<typename T> void MatrixFill(TMatrix *Src, T value)
 };
 TMatrix *DividMatrix64F(TMatrix *Src, TMatrix *Src2);
 TMatrix *MultiplyMatrix64F(TMatrix *Src, TMatrix *Src2);
+TMatrix *SubMatrix64F(TMatrix *Src, TMatrix *Src2);
+TMatrix *AddMatrix64F(TMatrix *Src, TMatrix *Src2);

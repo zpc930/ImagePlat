@@ -106,7 +106,17 @@ TMatrix*  Guildedfilter::BoxFilter(const TMatrix* imSrc, const int r)
 	}
 	return imDst;
 }
-int Guildedfilter::GuidedFilterMat(const  cv::Mat I, cv::Mat p, const int r, const float eps)
+#include <opencv2/highgui.hpp>
+void ShowMtarix(TMatrix* I,char* sztitle)
+{
+	int H = I->Height;
+	int W = I->Width;
+	cv::Mat M;
+	M.create(W, H, CV_64FC1);
+	ConvertMatrix2Mat(I, M);
+	cv::imshow(sztitle, M);
+}
+cv::Mat  Guildedfilter::GuidedFilterMat(const  cv::Mat I, cv::Mat p, const int r, const float eps)
 {
 	int H = I.cols;
 	int W = I.rows;
@@ -114,10 +124,16 @@ int Guildedfilter::GuidedFilterMat(const  cv::Mat I, cv::Mat p, const int r, con
 	TMatrix* pTI = CreateMatrix(W, H,nDepth, I.channels(), false);
 	ConvertMat2Matrix(I, pTI);
 	TMatrix* pTP = CreateMatrix(W, H, nDepth, I.channels(), false);
-	ConvertMat2Matrix(I, pTP);
-	GuidedFilterProcess(pTI, pTP, r, eps);
-	return 0;
+	ConvertMat2Matrix(I, pTP);	
+	TMatrix* pRseult =GuidedFilterProcess(pTI, pTP, r, eps);
+	FreeMatrix(pTI);
+	FreeMatrix(pTP);
+	cv::Mat dst = I.clone();
+	ConvertMatrix2Mat(pRseult,  dst);
+	return dst;
 }
+
+
 TMatrix* Guildedfilter::GuidedFilterProcess(const  TMatrix* I, const TMatrix* p, const int r, const float eps)
 {
 	int H = I->Height;
@@ -129,17 +145,70 @@ TMatrix* Guildedfilter::GuidedFilterProcess(const  TMatrix* I, const TMatrix* p,
 	N = M;
 	if (1 == I->Channel)
 	{
-		TMatrix* mean_I = BoxFilter(I, r);
-		TMatrix* pMeanId = DividMatrix64F(mean_I, N);
-		FreeMatrix(mean_I);
-		mean_I = pMeanId;
-		TMatrix* mean_p = BoxFilter(p, r);
-		TMatrix* pMeanPd = DividMatrix64F(mean_p, N);		
-		mean_p = pMeanPd;
-		FreeMatrix(mean_p);
-		TMatrix* tmp = MultiplyMatrix64F((TMatrix *)I, (TMatrix *)p);
-		TMatrix* mean_Ip = BoxFilter(tmp, r);
+		TMatrix* pMeanId  = BoxFilter(I, r);
+		TMatrix* mean_I = DividMatrix64F(pMeanId, N);
+		FreeMatrix(pMeanId);
+		
+		TMatrix* pMeanPd  = BoxFilter(p, r);
+		TMatrix*  mean_p = DividMatrix64F(pMeanPd, N);		
+		FreeMatrix(pMeanPd);
+		
 
+		TMatrix* tmp = MultiplyMatrix64F((TMatrix *)I, (TMatrix *)p);
+		  pMeanPd = BoxFilter(tmp, r);
+		FreeMatrix(tmp);
+		TMatrix* mean_Ip = DividMatrix64F(pMeanPd, N);
+		FreeMatrix(pMeanPd);
+
+		
+		tmp=MultiplyMatrix64F(mean_I, mean_p);
+		TMatrix* cov_Ip = SubMatrix64F(mean_Ip , tmp);
+		FreeMatrix(tmp);
+		FreeMatrix(mean_Ip);
+
+		tmp = MultiplyMatrix64F((TMatrix *)I, (TMatrix *)I);
+		TMatrix* mean_II = BoxFilter(tmp, r);
+		FreeMatrix(tmp);
+		tmp = mean_II;
+		mean_II = DividMatrix64F(tmp, N);
+		FreeMatrix(tmp);
+
+		tmp=MultiplyMatrix64F(mean_I, mean_I);
+		TMatrix* var_I = SubMatrix64F(mean_II , tmp);
+		FreeMatrix(mean_II);
+
+		TMatrix* epsMat = CreateMatrix(W, H, I->Depth, I->Channel, false);
+		MatrixFill(epsMat, eps);
+		TMatrix* var_temp = AddMatrix64F(var_I, epsMat);
+		TMatrix* a = DividMatrix64F(cov_Ip, var_temp);
+
+		FreeMatrix(var_temp);
+		FreeMatrix(tmp);
+		FreeMatrix(cov_Ip);
+		FreeMatrix(epsMat);
+		FreeMatrix(var_I);
+
+		tmp = MultiplyMatrix64F(a, mean_I);
+		TMatrix* b = SubMatrix64F(mean_p, tmp);  
+		TMatrix* temp_mean_a = BoxFilter(a, r);
+		TMatrix* mean_a = DividMatrix64F(temp_mean_a, N);
+		FreeMatrix(temp_mean_a);
+		FreeMatrix(a);
+		FreeMatrix(mean_I);
+		FreeMatrix(mean_p);
+		
+		TMatrix* temp_mean_b = BoxFilter(b, r);		
+		TMatrix* mean_b = DividMatrix64F(temp_mean_b, N);
+		FreeMatrix(tmp);
+		FreeMatrix(temp_mean_b);
+		FreeMatrix(b);
+		FreeMatrix(N);
+		tmp = MultiplyMatrix64F(mean_a, (TMatrix *)I);
+		FreeMatrix(mean_a);
+		TMatrix* q = AddMatrix64F( tmp , mean_b);
+		FreeMatrix(mean_b);
+		FreeMatrix(tmp);
+		return q;
 	}
 	return NULL;
 }

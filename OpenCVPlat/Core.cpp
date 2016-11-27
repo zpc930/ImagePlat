@@ -155,3 +155,27 @@ TMatrix *MultiplyMatrix64F(TMatrix *Src, TMatrix *Src2)
 		(double*)dst->Data, dst->WidthStep, W, H, 1.0);
 	return dst;
 }
+
+TMatrix *SubMatrix64F(TMatrix *Src, TMatrix *Src2)
+{
+	int W = Src->Width;
+	int H = Src->Height;
+	int nStep = Src->WidthStep;
+	int nStep2 = Src2->WidthStep;
+	TMatrix * dst = CreateMatrix(W, H, Src->Depth, Src->Channel, false);
+	vBinOp64f<OpSub<double>>((double*)Src->Data, nStep, (double*)Src2->Data, nStep2,
+		(double*)dst->Data, dst->WidthStep, W, H);
+	return dst;
+}
+
+TMatrix *AddMatrix64F(TMatrix *Src, TMatrix *Src2)
+{
+	int W = Src->Width;
+	int H = Src->Height;
+	int nStep = Src->WidthStep;
+	int nStep2 = Src2->WidthStep;
+	TMatrix * dst = CreateMatrix(W, H, Src->Depth, Src->Channel, false);
+	vBinOp64f<OpAdd<double>>((double*)Src->Data, nStep, (double*)Src2->Data, nStep2,
+		(double*)dst->Data, dst->WidthStep, W, H);
+	return dst;
+}

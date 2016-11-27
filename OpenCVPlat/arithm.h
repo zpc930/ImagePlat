@@ -11,6 +11,22 @@ template<typename _Tp> static inline _Tp saturate_cast(int v) { return _Tp(v); }
 template<typename _Tp> static inline _Tp saturate_cast(float v) { return _Tp(v); }
 template<typename _Tp> static inline _Tp saturate_cast(double v) { return _Tp(v); }
 
+template<typename T1, typename T2 = T1, typename T3 = T1> struct OpAdd
+{
+	typedef T1 type1;
+	typedef T2 type2;
+	typedef T3 rtype;
+	T3 operator ()(const T1 a, const T2 b) const { return saturate_cast<T3>(a + b); }
+};
+
+template<typename T1, typename T2 = T1, typename T3 = T1> struct OpSub
+{
+	typedef T1 type1;
+	typedef T2 type2;
+	typedef T3 rtype;
+	T3 operator ()(const T1 a, const T2 b) const { return saturate_cast<T3>(a - b); }
+};
+
 template<typename T> static void
 div_Operate(const T* src1, int step1, const T* src2, int step2,
 T* dst, int step, int width,int height , double scale)
@@ -109,5 +125,144 @@ T* dst, size_t step, int width,int height , WT scale)
 			for (; i < width; i++)
 				dst[i] = saturate_cast<T>(scale*(WT)src1[i] * src2[i]);
 		}
+	}
+}
+
+template<typename T, class Op>
+void vBinOp8(const T* src1, size_t step1, const T* src2, size_t step2, T* dst, size_t step, int width, int height)
+{
+Op op;
+
+	for (; height--; src1 += step1 / sizeof(src1[0]),
+		src2 += step2 / sizeof(src2[0]),
+		dst += step / sizeof(dst[0]))
+	{
+		int x = 0;
+		for (; x <= width - 4; x += 4)
+		{
+			T v0 = op(src1[x], src2[x]);
+			T v1 = op(src1[x + 1], src2[x + 1]);
+			dst[x] = v0; dst[x + 1] = v1;
+			v0 = op(src1[x + 2], src2[x + 2]);
+			v1 = op(src1[x + 3], src2[x + 3]);
+			dst[x + 2] = v0; dst[x + 3] = v1;
+		}
+
+		for (; x < width; x++)
+			dst[x] = op(src1[x], src2[x]);
+	}
+}
+
+template<typename T, class Op>
+void vBinOp16(const T* src1, size_t step1, const T* src2, size_t step2,
+	T* dst, size_t step, int width, int height)
+{
+
+	Op op;
+
+	for (; height--; src1 += step1 / sizeof(src1[0]),
+		src2 += step2 / sizeof(src2[0]),
+		dst += step / sizeof(dst[0]))
+	{
+		int x = 0;
+			for (; x <= width - 4; x += 4)
+			{
+				T v0 = op(src1[x], src2[x]);
+				T v1 = op(src1[x + 1], src2[x + 1]);
+				dst[x] = v0; dst[x + 1] = v1;
+				v0 = op(src1[x + 2], src2[x + 2]);
+				v1 = op(src1[x + 3], src2[x + 3]);
+				dst[x + 2] = v0; dst[x + 3] = v1;
+			}
+
+		for (; x < width; x++)
+			dst[x] = op(src1[x], src2[x]);
+	}
+}
+
+
+template<class Op>
+void vBinOp32s(const int* src1, size_t step1, const int* src2, size_t step2,
+	int* dst, size_t step, int width, int height)
+{
+
+	Op op;
+
+	for (; height--; src1 += step1 / sizeof(src1[0]),
+		src2 += step2 / sizeof(src2[0]),
+		dst += step / sizeof(dst[0]))
+	{
+		int x = 0;
+		for (; x <= width - 4; x += 4)
+		{
+			int v0 = op(src1[x], src2[x]);
+			int v1 = op(src1[x + 1], src2[x + 1]);
+			dst[x] = v0; dst[x + 1] = v1;
+			v0 = op(src1[x + 2], src2[x + 2]);
+			v1 = op(src1[x + 3], src2[x + 3]);
+			dst[x + 2] = v0; dst[x + 3] = v1;
+		}
+
+		for (; x < width; x++)
+			dst[x] = op(src1[x], src2[x]);
+	}
+}
+
+
+template<class Op, class Op32>
+void vBinOp32f(const float* src1, size_t step1, const float* src2, size_t step2,
+	float* dst, size_t step, int width, int height)
+{
+
+	Op op;
+
+	for (; height--; src1 += step1 / sizeof(src1[0]),
+		src2 += step2 / sizeof(src2[0]),
+		dst += step / sizeof(dst[0]))
+	{
+		int x = 0;
+
+
+#if CV_ENABLE_UNROLLED
+		for (; x <= width - 4; x += 4)
+		{
+			float v0 = op(src1[x], src2[x]);
+			float v1 = op(src1[x + 1], src2[x + 1]);
+			dst[x] = v0; dst[x + 1] = v1;
+			v0 = op(src1[x + 2], src2[x + 2]);
+			v1 = op(src1[x + 3], src2[x + 3]);
+			dst[x + 2] = v0; dst[x + 3] = v1;
+		}
+#endif
+		for (; x < width; x++)
+			dst[x] = op(src1[x], src2[x]);
+	}
+}
+template<class Op >
+void vBinOp64f(const double* src1, size_t step1, const double* src2, size_t step2,
+	double* dst, size_t step, int width, int height)
+{
+
+	Op op;
+
+	for (; height--; src1 += step1 / sizeof(src1[0]),
+		src2 += step2 / sizeof(src2[0]),
+		dst += step / sizeof(dst[0]))
+	{
+		int x = 0;
+
+
+			for (; x <= width - 4; x += 4)
+			{
+				double v0 = op(src1[x], src2[x]);
+				double v1 = op(src1[x + 1], src2[x + 1]);
+				dst[x] = v0; dst[x + 1] = v1;
+				v0 = op(src1[x + 2], src2[x + 2]);
+				v1 = op(src1[x + 3], src2[x + 3]);
+				dst[x + 2] = v0; dst[x + 3] = v1;
+			}
+
+		for (; x < width; x++)
+			dst[x] = op(src1[x], src2[x]);
 	}
 }
