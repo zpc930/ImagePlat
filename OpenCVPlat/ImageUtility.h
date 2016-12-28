@@ -1,5 +1,5 @@
 #pragma once
-namespace cv
+namespace cvplat
 {
 	template<typename T> static void
 		split_(const T* src, T** dst, int len, int cn);

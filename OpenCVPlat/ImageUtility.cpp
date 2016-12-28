@@ -1,7 +1,11 @@
 #include "stdafx.h"
 #include "ImageUtility.h"
 
-namespace cv
+typedef __int64 int64;
+typedef unsigned char uchar;
+typedef unsigned short ushort;
+
+namespace cvplat
 {
 	template<typename T> static void
 		split_(const T* src, T** dst, int len, int cn)
@@ -103,5 +107,28 @@ namespace cv
 				dst[j + 2] = src2[i]; dst[j + 3] = src3[i];
 			}
 		}
+	}
+
+	void split8u(const uchar* src, uchar** dst, int len, int cn)
+	{
+		
+			split_(src, dst, len, cn);
+	}
+
+	void split16u(const ushort* src, ushort** dst, int len, int cn)
+	{
+		
+			split_(src, dst, len, cn);
+	}
+
+	void split32s(const int* src, int** dst, int len, int cn)
+	{
+		
+			split_(src, dst, len, cn);
+	}
+
+	void split64s(const int64* src, int64** dst, int len, int cn)
+	{	
+			split_(src, dst, len, cn);
 	}
 }
