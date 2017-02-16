@@ -2,6 +2,11 @@
 #include "GlobalFun.h"
 #include <math.h>
 
+int round_num(double a)
+{
+	return int(a + 0.5);
+}
+
 byte ClampToByte(FLOAT f)
 {
 	return (unsigned char)(f = (f > 255) ? 255 : f);

@@ -2,6 +2,7 @@
 typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef signed char schar;
+typedef  unsigned int size_t;
 template<typename _Tp> static inline _Tp saturate_cast(uchar v) { return _Tp(v); }
 template<typename _Tp> static inline _Tp saturate_cast(schar v) { return _Tp(v); }
 template<typename _Tp> static inline _Tp saturate_cast(ushort v) { return _Tp(v); }
@@ -264,5 +265,31 @@ void vBinOp64f(const double* src1, size_t step1, const double* src2, size_t step
 
 		for (; x < width; x++)
 			dst[x] = op(src1[x], src2[x]);
+	}
+}
+
+template<typename T, typename DT, typename WT> static void
+cvtScale_(const T* src, size_t sstep,
+DT* dst, size_t dstep, size_t width, size_t height,
+WT scale, WT shift)
+{
+	sstep /= sizeof(src[0]);
+	dstep /= sizeof(dst[0]);
+	for (; height--; src += sstep, dst += dstep)
+	{	
+		int x = 0;
+		for (; x <= width - 4; x += 4)
+		{
+			DT t0, t1;
+			t0 = saturate_cast<DT>(src[x] * scale + shift);
+			t1 = saturate_cast<DT>(src[x + 1] * scale + shift);
+			dst[x] = t0; dst[x + 1] = t1;
+			t0 = saturate_cast<DT>(src[x + 2] * scale + shift);
+			t1 = saturate_cast<DT>(src[x + 3] * scale + shift);
+			dst[x + 2] = t0; dst[x + 3] = t1;
+		}
+
+		for (; x < width; x++)
+			dst[x] = saturate_cast<DT>(src[x] * scale + shift);
 	}
 }

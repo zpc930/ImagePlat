@@ -1,5 +1,6 @@
 #pragma once
 
+int round_num(double a);
 
 class GlobalFun
 {

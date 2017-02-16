@@ -49,8 +49,8 @@ int CopyMat2Matrix(cv::Mat src, TMatrix* pDst)
 int CopyMatrix2Mat(TMatrix* psrc, cv::Mat Dst)
 {
 	int nChannel = Dst.channels();
-	int width = Dst.rows;
-	int height = Dst.cols;
+	int width = Dst.cols;
+	int height = Dst.rows;
 	int ndestwstep = psrc->WidthStep;
 	
 	for (int y = 0; y < height; y++)
